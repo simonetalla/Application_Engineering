@@ -7,3 +7,4 @@ nbval
 click
 flask
 requests
+emoji==0.5.1
