@@ -10,6 +10,8 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     return f"Hello World!!!!!"
+def automa():
+    return f"AUTOMATIC UPDATE"
 
 @app.route("/fakedata")
 def fakedata():
