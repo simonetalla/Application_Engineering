@@ -1,0 +1,78 @@
+
+swagger: "2.0"
+info:
+  title: "modelserve"
+  description: "Get prediction from sklearn model."
+  version: "1.0.0"
+host: "modelserve-dot-project-434-273319.appspot.com"
+schemes:
+  - "https"
+security:
+  - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+x-google-management:
+  metrics:
+    - name: "modelserve-predict"
+      displayName: "modelserve predict"
+      valueType: INT64
+      metricKind: DELTA
+  quota:
+    limits:
+      - name: "modelserve-predict-limit"
+        metric: "modelserve-predict"
+        unit: "1/min/{project}"
+        values:
+          STANDARD: 1000
+paths:
+  "/predict":
+    post:
+      description: "Get prediction given X."
+      operationId: "predict"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        -
+          name: "body"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/X"
+      responses:
+        200:
+          description: "Success."
+          schema:
+            $ref: "#/definitions/y"
+        400:
+          description: "Missing X."
+      x-google-quota:
+        metricCosts:
+          modelserve-predict: 1
+definitions:
+  X:
+    type: "object"
+    required:
+    - "X"
+    properties:
+      X:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "number"
+            format: "float"
+  y:
+    type: "object"
+    required:
+    - "y"
+    properties:
+      y:
+        type: "array"
+        items:
+          type: "number"
+          format: "float"
