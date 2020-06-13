@@ -6,18 +6,18 @@ from my_library import __version__
 
 #from flask import Flask
 
-"""app = Flask(__name__)
+#"""app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return f"Hello World!!!!!"
-def automa():
-    return f"AUTOMATIC UPDATE"
+#@app.route("/")
+#def hello():
+#    return f"Hello World!!!!!"
+#def automa():
+#    return f"AUTOMATIC UPDATE"
 
-@app.route("/fakedata")
-def fakedata():
-    return json.dumps(fake_data())
-"""
+#@app.route("/fakedata")
+#def fakedata():
+#    return json.dumps(fake_data())
+#"""
 import logging
 import os
 
@@ -34,16 +34,13 @@ app = Flask(__name__)
 
 @app.before_first_request
 def _load_model():
+    # Get the model information 
     global MODEL
     client = storage.Client()
     bucket = client.get_bucket(MODEL_BUCKET)
     blob = bucket.get_blob(MODEL_FILENAME)
     s = blob.download_as_string()
-
-    # Note: Change the save/load mechanism according to the framework
-    # used to build the model.
     MODEL = pickle.loads(s)
-
 
 @app.route('/', methods=['GET'])
 def index():
@@ -59,6 +56,7 @@ def predict():
 
 @app.errorhandler(500)
 def server_error(e):
+    # log error
     logging.exception('An error occurred during a request.')
     return """
     An internal error occurred: <pre>{}</pre>
@@ -66,4 +64,4 @@ def server_error(e):
     """.format(e), 500
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='127.0.0.1', port=8080, debug=True)

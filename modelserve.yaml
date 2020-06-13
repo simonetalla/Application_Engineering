@@ -63,9 +63,16 @@ definitions:
         type: "array"
         items:
           type: "array"
-          items:
+          items: 
             type: "number"
             format: "float"
+              type: "number"
+              format: "float"
+                type: "number"
+                format: "float"
+                  type: "number"
+                  format: "float" 
+
   y:
     type: "object"
     required:
@@ -74,5 +81,11 @@ definitions:
       y:
         type: "array"
         items:
-          type: "number"
-          format: "float"
+          type: "array"
+          items:
+            type: "number"
+            format: "float"
+              type: "number"
+              format: "float"
+                type: "number"
+                  format: "float"
